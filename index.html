@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS for animations (Animate On Scroll) - CDN for simplicity -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom CSS for additional animations and styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="javascript"  href="script.js">
+   <!-- Favicon lines here -->
+    <link rel="icon" href="/favicon_io (1)/apple-touch-icon.png" type="image/x-icon">
+    <link rel="icon" type="image/png" href="images/portfolio.png">
+</head>
+<body class="bg-gray-900 text-gray-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- Loading Animation (Full-screen fade out on load) - Simplified spinner for spectacular entry -->
+    <div id="loader" class="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    </div>
+
+    <!-- Navbar (Fixed, with fade-down animation) -->
+    <nav class="fixed top-0 left-0 w-full bg-gray-800 shadow-lg z-20" data-aos="fade-down" data-aos-duration="800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- EDIT HERE: Replace with your name or brand -->
+            <a href="#" class="text-2xl font-bold text-blue-400">My portfolio</a>
+            <ul class="flex space-x-6">
+                <li><a href="#home" class="text-gray-300 hover:text-blue-400 transition-colors">Home</a></li>
+                <li><a href="#about" class="text-gray-300 hover:text-blue-400 transition-colors">About</a></li>
+                <li><a href="#skills" class="text-gray-300 hover:text-blue-400 transition-colors">Skills</a></li>
+                <li><a href="#projects" class="text-gray-300 hover:text-blue-400 transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-gray-300 hover:text-blue-400 transition-colors">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section (With fade-up image at beginning, typing animation) -->
+    <!-- Hero Section - Now with your background image -->
+<section id="home" class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gray-900">
+    <!-- Your background image with overlay -->
+    <div class="absolute inset-0">
+        <img 
+            src="images/profile.jpeg" 
+            alt="Background" 
+            class="w-full h-full object-cover opacity-40 scale-110 transition-transform duration-[20s] hover:scale-100"
+            data-aos="zoom-in" 
+            data-aos-duration="2000"
+        >
+        <!-- Dark overlay for text readability (cyber feel) -->
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/60 to-gray-900/80"></div>
+    </div>
+
+    <!-- Your profile image (still fades in) -->
+    <img 
+        src="images/profile.jpeg" 
+        alt="Your Profile Image" 
+        class="w-32 h-32 md:w-48 md:h-48 rounded-full mb-8 object-cover shadow-2xl shadow-blue-500/30 relative z-10" 
+        data-aos="fade-in" 
+        data-aos-duration="1200"
+    >
+    <!-- EDIT HERE: Replace src="your-background-image.jpg" with your actual file (e.g. background.jpg) or URL -->
+    <!-- EDIT HERE: Same for profile image -->
+
+    <div class="text-center z-10" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <h1 class="text-5xl md:text-7xl font-bold text-blue-400 mb-4 typing-animation">Emmanuel Ndignam Nelimo</h1>
+    
+    <p class="text-2xl md:text-4xl text-gray-300 mb-8">
+        I am 
+        <span id="typed-skills" class="text-blue-300 font-semibold relative inline-block min-w-[300px] text-left">
+            <!-- The typing text will appear here -->
+        </span>
+        <span class="typed-cursor animate-blink" aria-hidden="true">|</span>
+    </p>
+    
+    <a href="#projects" class="bg-blue-500 text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-blue-400 transition-colors duration-300">Explore My Work</a>
+</div><style>/* Blinking cursor for typing effect */
+.animate-blink {
+    animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Optional: Make sure the typed text doesn't jump around */
+#typed-skills {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+}</style>
+        <!-- EDIT HERE: Replace 'your-profile-image.jpg' with your actual image path or URL -->
+    <script>// Typing animation for skills/roles under the name
+document.addEventListener('DOMContentLoaded', () => {
+    const typedElement = document.getElementById('typed-skills');
+    if (!typedElement) return;
+
+    // EDIT HERE: Add/change your roles/skills as needed
+    const roles = [
+        "an aspiring cybersecurity specialist",
+        "a DevOps engineer",
+        "a freelancer",
+        "a designer",
+        "a content creator",
+        "a multilinguist"
+    ];
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingDelay = 80;   // ms per character when typing
+    let deletingDelay = 50; // ms per character when deleting
+    let pauseAfterComplete = 1800; // pause before deleting
+
+    function type() {
+        const currentRole = roles[roleIndex];
+        
+        // Typing forward
+        if (!isDeleting && charIndex <= currentRole.length) {
+            typedElement.textContent = currentRole.substring(0, charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+            return;
+        }
+        
+        // Pause at end, then start deleting
+        if (!isDeleting && charIndex > currentRole.length) {
+            setTimeout(() => {
+                isDeleting = true;
+                type();
+            }, pauseAfterComplete);
+            return;
+        }
+        
+        // Deleting backward
+        if (isDeleting && charIndex > 0) {
+            typedElement.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(type, deletingDelay);
+            return;
+        }
+        
+        // Move to next role
+        if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length; // loop forever
+            setTimeout(type, 500); // small pause before next typing
+        }
+    }
+
+    // Start typing when hero is visible (better UX)
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            type();
+            observer.disconnect(); // run only once
+        }
+    }, { threshold: 0.3 });
+
+    observer.observe(typedElement.parentElement); // observe the <p> or hero section
+});</script>    
+       
+    </section>
+
+    <!-- About Section (Fade-right effect) -->
+    <section id="about" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4" data-aos="fade-right" data-aos-duration="1000">
+            <h2 class="text-4xl font-bold text-center text-blue-400 mb-10">About Me</h2>
+            <!-- EDIT HERE: Your bio details -->
+            <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                With over 1 year in studying cybersecurity and DevOps, I specialize in securing cloud infrastructures, automating deployments, and mitigating threats. Based in Buduburam, Ghana, I've worked on projects involving AWS, Kubernetes, and ethical hacking. Passionate about building resilient systems in the futrure.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section (Fade-left effect, with hover transitions) -->
+    <section id="skills" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-4" data-aos="fade-left" data-aos-duration="1000">
+        <h2 class="text-4xl font-bold text-center text-blue-400 mb-10">Skills</h2>
+        
+        <!-- Skills will be typed here -->
+        <div id="skills-list" class="text-center mx-auto max-w-3xl text-gray-300 text-lg leading-relaxed">
+            <!-- Skills appear here via JS -->
+        </div>
+        
+        <!-- Progress bars still visible after typing -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-blue-500/50 transition-shadow duration-500 transform hover:-translate-y-1">
+                <h3 class="text-2xl font-semibold text-blue-400 mb-2">Cybersecurity</h3>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 mb-4">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 90%"></div>
+                </div>
+                <ul class="list-disc pl-5 text-gray-300">
+                    <li>Penetration Testing</li>
+                    <li>Firewall Management</li>
+                    <li>SIEM Tools</li>
+                </ul>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-blue-500/50 transition-shadow duration-500 transform hover:-translate-y-1">
+                <h3 class="text-2xl font-semibold text-blue-400 mb-2">DevOps</h3>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 mb-4">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 85%"></div>
+                </div>
+                <ul class="list-disc pl-5 text-gray-300">
+                    <li>CI/CD Pipelines</li>
+                    <li>Kubernetes & Docker</li>
+                    <li>AWS/Azure</li>
+                </ul>
+            </div>
+             <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-blue-500/50 transition-shadow duration-500 transform hover:-translate-y-1">
+                <h3 class="text-2xl font-semibold text-blue-400 mb-2">Web development</h3>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 mb-4">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 75%"></div>
+                </div>
+                <ul class="list-disc pl-5 text-gray-300">
+                    <li>building static websites</li>
+                    <li>building dynamic websites</li>
+                    <li>creating managent systems</li>
+                </ul>
+            </div>
+             <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-blue-500/50 transition-shadow duration-500 transform hover:-translate-y-1">
+                <h3 class="text-2xl font-semibold text-blue-400 mb-2">multilinguist</h3>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 mb-4">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 50%"></div>
+                </div>
+                <ul class="list-disc pl-5 text-gray-300">
+                    <li>speaking English</li>
+                    <li>speaking in spanish</li>
+                    <li>speaking in chinese</li>
+                </ul>
+            </div>
+            <!-- Add more categories if needed -->
+        </div>
+    </div>
+</section>
+    <style>/* Typing skills container */
+#skills-list {
+    min-height: 120px; /* Adjust based on your content */
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.skill-item {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.skill-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}</style>
+
+   <section id="projects" class="py-20 bg-gray-800">
+    <div class="container mx-auto px-4" data-aos="zoom-in" data-aos-duration="1000">
+        <h2 class="text-4xl font-bold text-center text-blue-400 mb-10">Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- EDIT HERE: Add/edit project details, images, links. Replace 'project-image-1.jpg' with your actual image -->
+            <div class="bg-gray-900 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-500" data-aos="fade-up" data-aos-delay="100">
+                <img src="project-image-1.jpg" alt="Project 1" class="w-full h-48 object-cover mb-4 rounded">
+                <h3 class="text-xl font-semibold text-blue-400 mb-2">DevOps Automation</h3>
+                <p class="text-gray-300 mb-4">Implemented DevOps pipeline with security scans for AWS environments.</p>
+                <button onclick="openModal('project1')" class="text-blue-400 hover:underline">View Details</button>
+            </div>
+             <div class="bg-gray-900 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-500" data-aos="fade-up" data-aos-delay="100">
+                <img src="project-image-1.jpg" alt="Project 1" class="w-full h-48 object-cover mb-4 rounded">
+                <h3 class="text-xl font-semibold text-blue-400 mb-2">Secure Cloud Deployment</h3>
+                <p class="text-gray-300 mb-4">Implemented DevOps pipeline with security scans for AWS environments.</p>
+                <button onclick="openModal('project1')" class="text-blue-400 hover:underline">View Details</button>
+            </div>
+             <div class="bg-gray-900 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-500" data-aos="fade-up" data-aos-delay="100">
+                <img src="project-image-1.jpg" alt="Project 1" class="w-full h-48 object-cover mb-4 rounded">
+                <h3 class="text-xl font-semibold text-blue-400 mb-2">cybersecurity</h3>
+                <p class="text-gray-300 mb-4">Tested several websites by breaking into them usually my own creation or by recommendation followwing legal requirement</p>
+                <button onclick="openModal('project1')" class="text-blue-400 hover:underline">View Details</button>
+            </div>
+             <div class="bg-gray-900 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-500" data-aos="fade-up" data-aos-delay="100">
+                <img src="images/webdev proj.jpg" alt="Project 3" class="w-full h-48 object-cover mb-4 rounded">
+                <h3 class="text-xl font-semibold text-blue-400 mb-2">Web development </h3>
+                <p class="text-gray-300 mb-4">created many web =sites for several clients including hotel booking sites, trading sites , valentine sites,management systemsand alot more .</p>
+                <button onclick="openModal('project1')" class="text-blue-400 hover:underline">View Details</button>
+            </div>
+            <!-- Add more project cards similarly, e.g., with unique IDs like 'project2' -->
+        </div>
+    </div>
+</section>
+
+<!-- Modals (hidden initially) - Add one per project -->
+<div id="project1-modal" class="fixed inset-0 bg-gray-900/80 flex items-center justify-center z-50 hidden" onclick="closeModal('project1')">
+    <div class="bg-gray-800 p-8 rounded-lg max-w-lg w-full relative" onclick="event.stopPropagation();"> <!-- Stop close on content click -->
+        <button class="absolute top-2 right-2 text-gray-300 hover:text-blue-400" onclick="closeModal('project1')">✕</button>
+        <h3 class="text-2xl font-bold text-blue-400 mb-4">Secure Cloud Deployment Details</h3>
+        <!-- EDIT HERE: Add full project details -->
+        <p class="text-gray-300 mb-4">Detailed description: Built a CI/CD pipeline using Jenkins, integrated with AWS for secure deployments. Features: Automated vulnerability scans with OWASP ZAP, Docker containerization, Kubernetes orchestration.</p>
+        <ul class="list-disc pl-5 text-gray-300 mb-4">
+            <li>Tech Stack: AWS, Jenkins, Docker, Kubernetes, OWASP</li>
+            <li>Achievements: Reduced deployment time by 40%, improved security posture</li>
+        </ul>
+        <a href="https://github.com/your-repo" target="_blank" class="text-blue-400 hover:underline">GitHub Repo</a> | 
+        <a href="https://live-demo.com" target="_blank" class="text-blue-400 hover:underline">Live Demo</a>
+    </div>
+</div>
+<style>/* Modal Animation */
+.fixed.hidden { display: none; }
+.fixed { transition: opacity 0.3s ease; }
+.fixed:not(.hidden) { opacity: 1; }</style>
+<script>// Modal Functions
+function openModal(projectId) {
+    const modal = document.getElementById(`${projectId}-modal`);
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closeModal(projectId) {
+    const modal = document.getElementById(`${projectId}-modal`);
+    if (modal) modal.classList.add('hidden');
+}
+
+// Close on Esc key (optional UX)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('[id$="-modal"]').forEach(modal => modal.classList.add('hidden'));
+    }
+});</script>
+<!-- Repeat for each project, e.g., <div id="project2-modal">... -->
+
+    <!-- Contact Section (Fade-in effect) -->
+   <section id="contact" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-4" data-aos="fade-in" data-aos-duration="1000">
+        <h2 class="text-4xl font-bold text-center text-blue-400 mb-10">Get in Touch</h2>
+        <!-- Success message (hidden initially) -->
+        <div id="form-success" class="hidden text-center mb-6 text-green-400 text-xl font-semibold animate-checkmark">
+            Sent! <span class="inline-block ml-2">✔</span>
+        </div>
+        <!-- EDIT HERE: Replace with your Formspree action URL -->
+        <form id="contact-form" class="max-w-md mx-auto" action="https://formspree.io/f/mdalbrll" method="POST">
+            <input type="text" name="name" placeholder="Your Name" class="w-full mb-4 p-3 bg-gray-900 border border-gray-700 rounded text-gray-300 focus:border-blue-500 transition-colors duration-300" required>
+            <input type="email" name="email" placeholder="Your Email" class="w-full mb-4 p-3 bg-gray-900 border border-gray-700 rounded text-gray-300 focus:border-blue-500 transition-colors duration-300" required>
+            <textarea name="message" placeholder="Your Message" class="w-full mb-4 p-3 bg-gray-900 border border-gray-700 rounded text-gray-300 h-32 focus:border-blue-500 transition-colors duration-300" required></textarea>
+            <button type="submit" class="bg-blue-500 text-gray-900 px-6 py-3 rounded-full w-full font-semibold hover:bg-blue-400 transition-colors duration-300">Send Message</button>
+        </form>
+        <!-- DM Link Button -->
+        <div class="text-center mt-6">
+            <a id="dm-link" href="#" class="text-blue-400 hover:underline">Or message me on X (Twitter)</a>
+        </div>
+    </div>
+</section>
+<style>/* Success animation */
+.animate-checkmark {
+    animation: fadeInCheck 0.8s ease-in-out;
+}
+
+@keyframes fadeInCheck {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}</style>
+
+    <!-- Footer (Fade-up effect) -->
+    <footer class="bg-gray-800 text-gray-300 py-6 text-center" data-aos="fade-up" data-aos-duration="800">
+        <!-- EDIT HERE: Your copyright and links -->
+        <p>&copy; 2026 Emmanuel Ndignam Nelimo. All rights reserved.</p>
+        <div class="flex justify-center space-x-4 mt-2">
+            <a href="#" class="hover:text-blue-400 transition-colors duration-300">LinkedIn</a>
+            <a href="#" class="hover:text-blue-400 transition-colors duration-300">GitHub</a>
+            <a href="#" class="hover:text-blue-400 transition-colors duration-300">Twitter</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js">window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    loader.style.transition = 'opacity 1s ease-out';
+    loader.style.opacity = '0';
+    setTimeout(() => loader.remove(), 1000);
+});
+// Contact Form Submission with Animation
+const contactForm = document.getElementById('contact-form');
+const successMessage = document.getElementById('form-success');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default submit for animation
+
+        // Use Fetch to submit to Formspree (async)
+        fetch(contactForm.action, {
+            method: 'POST',
+            body: new FormData(contactForm),
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                successMessage.classList.remove('hidden'); // Show success
+                contactForm.reset(); // Clear form
+            } else {
+                alert('Oops! Something went wrong. Try again.');
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error);
+        });
+    });
+}
+
+// DM Link (Opens Twitter DM)
+const dmLink = document.getElementById('dm-link');
+if (dmLink) {
+    const twitterUsername = 'Emmanuel Ndignam'; // EDIT HERE: Replace with your @username (e.g., 'emmanuelndignam')
+    dmLink.href = `https://twitter.com/messages/compose?recipient_id=${twitterUsername}`;
+}</script>
+</body>
+</html>

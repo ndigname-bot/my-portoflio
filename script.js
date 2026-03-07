@@ -30,6 +30,7 @@ function hideLoader() {
     }
 }
 
+
 // Try to hide immediately if page is already loaded
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     setTimeout(hideLoader, 500); // Small delay to let AOS init
@@ -39,3 +40,26 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 
 // Ultimate fallback: force hide after 3 seconds no matter what
 setTimeout(hideLoader, 3000);
+
+// Mobile menu toggle
+const menuToggle = document.getElementById('menu-toggle');
+const menuOpen = document.getElementById('menu-open');
+const menuClose = document.getElementById('menu-close');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        menuOpen.classList.toggle('hidden');
+        menuClose.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking a link (better UX)
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            menuOpen.classList.remove('hidden');
+            menuClose.classList.add('hidden');
+        });
+    });
+}
